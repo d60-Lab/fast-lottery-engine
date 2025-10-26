@@ -4,657 +4,324 @@
   "source": "https://excalidraw.com",
   "elements": [
     {
-      "id": "frontend-layer",
-      "type": "rectangle",
+      "type": "text",
       "x": 100,
       "y": 50,
       "width": 200,
-      "height": 100,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "#4c6ef5",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000001,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "前端层\nVue 3 + TypeScript\nElement Plus UI",
-        "fontSize": 14,
-        "fontFamily": 1,
-        "textAlign": "center",
-        "verticalAlign": "middle",
-        "baseline": 12
-      }
+      "height": 25,
+      "text": "系统架构图",
+      "fontSize": 20
     },
     {
-      "id": "backend-layer",
       "type": "rectangle",
       "x": 100,
-      "y": 200,
+      "y": 100,
       "width": 200,
       "height": 100,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "#40c057",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000002,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "后端层\nGo + Gin框架\nJWT认证",
-        "fontSize": 14,
-        "fontFamily": 1,
-        "textAlign": "center",
-        "verticalAlign": "middle",
-        "baseline": 12
-      }
+      "backgroundColor": "#4c6ef5"
     },
     {
-      "id": "database-layer",
+      "type": "text",
+      "x": 150,
+      "y": 130,
+      "width": 100,
+      "height": 50,
+      "text": "前端层\nVue 3\nTypeScript",
+      "fontSize": 14
+    },
+    {
+      "type": "rectangle",
+      "x": 100,
+      "y": 250,
+      "width": 200,
+      "height": 100,
+      "backgroundColor": "#40c057"
+    },
+    {
+      "type": "text",
+      "x": 150,
+      "y": 280,
+      "width": 100,
+      "height": 50,
+      "text": "后端层\nGo + Gin\nJWT认证",
+      "fontSize": 14
+    },
+    {
       "type": "rectangle",
       "x": 50,
-      "y": 350,
+      "y": 400,
       "width": 150,
       "height": 80,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "#fab005",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000003,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "MySQL 8.0\n主数据库",
-        "fontSize": 14,
-        "fontFamily": 1,
-        "textAlign": "center",
-        "verticalAlign": "middle",
-        "baseline": 12
-      }
+      "backgroundColor": "#fab005"
     },
     {
-      "id": "cache-layer",
+      "type": "text",
+      "x": 75,
+      "y": 430,
+      "width": 100,
+      "height": 25,
+      "text": "MySQL 8.0",
+      "fontSize": 14
+    },
+    {
       "type": "rectangle",
       "x": 250,
-      "y": 350,
+      "y": 400,
       "width": 150,
       "height": 80,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "#ff6b6b",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000004,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "Redis\n缓存层",
-        "fontSize": 14,
-        "fontFamily": 1,
-        "textAlign": "center",
-        "verticalAlign": "middle",
-        "baseline": 12
-      }
+      "backgroundColor": "#ff6b6b"
     },
     {
-      "id": "lottery-flow",
+      "type": "text",
+      "x": 275,
+      "y": 430,
+      "width": 100,
+      "height": 25,
+      "text": "Redis",
+      "fontSize": 14
+    },
+    {
       "type": "rectangle",
       "x": 450,
       "y": 50,
       "width": 400,
       "height": 300,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
       "backgroundColor": "transparent",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "dotted",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000005,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "抽奖核心流程",
-        "fontSize": 16,
-        "fontFamily": 1,
-        "textAlign": "left",
-        "verticalAlign": "top",
-        "baseline": 14
-      }
+      "strokeStyle": "dashed"
     },
     {
-      "id": "step1-auth",
+      "type": "text",
+      "x": 460,
+      "y": 60,
+      "width": 100,
+      "height": 25,
+      "text": "抽奖核心流程",
+      "fontSize": 16
+    },
+    {
       "type": "rectangle",
       "x": 480,
-      "y": 90,
+      "y": 100,
       "width": 120,
       "height": 60,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "#e9ecef",
-      "fillStyle": "solid",
-      "strokeWidth": 1,
-      "strokeStyle": "solid",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000006,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "1. JWT认证",
-        "fontSize": 12,
-        "fontFamily": 1,
-        "textAlign": "center",
-        "verticalAlign": "middle",
-        "baseline": 10
-      }
+      "backgroundColor": "#e9ecef"
     },
     {
-      "id": "step2-validate",
+      "type": "text",
+      "x": 510,
+      "y": 120,
+      "width": 60,
+      "height": 25,
+      "text": "JWT认证",
+      "fontSize": 12
+    },
+    {
       "type": "rectangle",
       "x": 620,
-      "y": 90,
+      "y": 100,
       "width": 120,
       "height": 60,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "#e9ecef",
-      "fillStyle": "solid",
-      "strokeWidth": 1,
-      "strokeStyle": "solid",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000007,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "2. 业务验证\n活动/用户/库存",
-        "fontSize": 12,
-        "fontFamily": 1,
-        "textAlign": "center",
-        "verticalAlign": "middle",
-        "baseline": 10
-      }
+      "backgroundColor": "#e9ecef"
     },
     {
-      "id": "step3-lottery",
+      "type": "text",
+      "x": 640,
+      "y": 120,
+      "width": 80,
+      "height": 25,
+      "text": "业务验证",
+      "fontSize": 12
+    },
+    {
       "type": "rectangle",
       "x": 480,
-      "y": 170,
+      "y": 180,
       "width": 120,
       "height": 60,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "#e9ecef",
-      "fillStyle": "solid",
-      "strokeWidth": 1,
-      "strokeStyle": "solid",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000008,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "3. 抽奖算法\n概率计算",
-        "fontSize": 12,
-        "fontFamily": 1,
-        "textAlign": "center",
-        "verticalAlign": "middle",
-        "baseline": 10
-      }
+      "backgroundColor": "#e9ecef"
     },
     {
-      "id": "step4-transaction",
+      "type": "text",
+      "x": 500,
+      "y": 200,
+      "width": 80,
+      "height": 25,
+      "text": "抽奖算法",
+      "fontSize": 12
+    },
+    {
       "type": "rectangle",
       "x": 620,
-      "y": 170,
+      "y": 180,
       "width": 120,
       "height": 60,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "#e9ecef",
-      "fillStyle": "solid",
-      "strokeWidth": 1,
-      "strokeStyle": "solid",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000009,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "4. 事务处理\n库存扣减",
-        "fontSize": 12,
-        "fontFamily": 1,
-        "textAlign": "center",
-        "verticalAlign": "middle",
-        "baseline": 10
-      }
+      "backgroundColor": "#e9ecef"
     },
     {
-      "id": "step5-response",
+      "type": "text",
+      "x": 640,
+      "y": 200,
+      "width": 80,
+      "height": 25,
+      "text": "事务处理",
+      "fontSize": 12
+    },
+    {
       "type": "rectangle",
       "x": 550,
-      "y": 250,
+      "y": 260,
       "width": 120,
       "height": 60,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "#e9ecef",
-      "fillStyle": "solid",
-      "strokeWidth": 1,
-      "strokeStyle": "solid",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000010,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "5. 返回结果\n前端展示",
-        "fontSize": 12,
-        "fontFamily": 1,
-        "textAlign": "center",
-        "verticalAlign": "middle",
-        "baseline": 10
-      }
+      "backgroundColor": "#e9ecef"
     },
     {
-      "id": "anti-brush",
+      "type": "text",
+      "x": 570,
+      "y": 280,
+      "width": 80,
+      "height": 25,
+      "text": "返回结果",
+      "fontSize": 12
+    },
+    {
       "type": "rectangle",
       "x": 900,
       "y": 50,
       "width": 180,
       "height": 100,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "#ff8787",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000011,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "防刷机制\n• 频率限制（1分钟1次）\n• 活动时间控制\n• 总次数限制\n• 用户状态检查",
-        "fontSize": 11,
-        "fontFamily": 1,
-        "textAlign": "center",
-        "verticalAlign": "middle",
-        "baseline": 9
-      }
+      "backgroundColor": "#ff8787"
     },
     {
-      "id": "inventory-control",
+      "type": "text",
+      "x": 920,
+      "y": 70,
+      "width": 140,
+      "height": 60,
+      "text": "防刷机制\n频率限制\n活动时间控制\n用户状态检查",
+      "fontSize": 11
+    },
+    {
       "type": "rectangle",
       "x": 900,
       "y": 180,
       "width": 180,
       "height": 100,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "#74c0fc",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000012,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "库存控制\n• 严格防超卖\n• 数据库事务\n• Redis缓存\n• 库存预警",
-        "fontSize": 11,
-        "fontFamily": 1,
-        "textAlign": "center",
-        "verticalAlign": "middle",
-        "baseline": 9
-      }
+      "backgroundColor": "#74c0fc"
     },
     {
-      "id": "prob-algorithm",
+      "type": "text",
+      "x": 920,
+      "y": 200,
+      "width": 140,
+      "height": 60,
+      "text": "库存控制\n严格防超卖\n数据库事务\nRedis缓存",
+      "fontSize": 11
+    },
+    {
       "type": "rectangle",
       "x": 900,
       "y": 310,
       "width": 180,
       "height": 100,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "#a9e34b",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000013,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "概率算法\n• 权重法/区间法\n• 公平性保证\n• 可配置概率\n• 实时生效",
-        "fontSize": 11,
-        "fontFamily": 1,
-        "textAlign": "center",
-        "verticalAlign": "middle",
-        "baseline": 9
-      }
+      "backgroundColor": "#a9e34b"
     },
     {
-      "id": "load-testing-box",
+      "type": "text",
+      "x": 920,
+      "y": 330,
+      "width": 140,
+      "height": 60,
+      "text": "概率算法\n权重法/区间法\n公平性保证\n实时生效",
+      "fontSize": 11
+    },
+    {
       "type": "rectangle",
       "x": 450,
       "y": 400,
       "width": 400,
       "height": 120,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
       "backgroundColor": "transparent",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "dotted",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000014,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "压测体系",
-        "fontSize": 16,
-        "fontFamily": 1,
-        "textAlign": "left",
-        "verticalAlign": "top",
-        "baseline": 14
-      }
+      "strokeStyle": "dashed"
     },
     {
-      "id": "vegeta-tool",
+      "type": "text",
+      "x": 460,
+      "y": 410,
+      "width": 100,
+      "height": 25,
+      "text": "压测体系",
+      "fontSize": 16
+    },
+    {
       "type": "rectangle",
       "x": 480,
-      "y": 430,
+      "y": 450,
       "width": 100,
       "height": 60,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "#ffd43b",
-      "fillStyle": "solid",
-      "strokeWidth": 1,
-      "strokeStyle": "solid",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000015,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "Vegeta\n压测工具",
-        "fontSize": 12,
-        "fontFamily": 1,
-        "textAlign": "center",
-        "verticalAlign": "middle",
-        "baseline": 10
-      }
+      "backgroundColor": "#ffd43b"
     },
     {
-      "id": "batch-register",
+      "type": "text",
+      "x": 500,
+      "y": 470,
+      "width": 60,
+      "height": 25,
+      "text": "Vegeta",
+      "fontSize": 12
+    },
+    {
       "type": "rectangle",
       "x": 600,
-      "y": 430,
+      "y": 450,
       "width": 100,
       "height": 60,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "#ffd43b",
-      "fillStyle": "solid",
-      "strokeWidth": 1,
-      "strokeStyle": "solid",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000016,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "批量注册\n1000万用户",
-        "fontSize": 12,
-        "fontFamily": 1,
-        "textAlign": "center",
-        "verticalAlign": "middle",
-        "baseline": 10
-      }
+      "backgroundColor": "#ffd43b"
     },
     {
-      "id": "data-validation",
+      "type": "text",
+      "x": 620,
+      "y": 470,
+      "width": 60,
+      "height": 25,
+      "text": "批量注册",
+      "fontSize": 12
+    },
+    {
       "type": "rectangle",
       "x": 720,
-      "y": 430,
+      "y": 450,
       "width": 100,
       "height": 60,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "#ffd43b",
-      "fillStyle": "solid",
-      "strokeWidth": 1,
-      "strokeStyle": "solid",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000017,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "数据验证\n一致性检查",
-        "fontSize": 12,
-        "fontFamily": 1,
-        "textAlign": "center",
-        "verticalAlign": "middle",
-        "baseline": 10
-      }
+      "backgroundColor": "#ffd43b"
     },
     {
-      "id": "docker-deployment",
+      "type": "text",
+      "x": 740,
+      "y": 470,
+      "width": 60,
+      "height": 25,
+      "text": "数据验证",
+      "fontSize": 12
+    },
+    {
       "type": "rectangle",
       "x": 50,
-      "y": 480,
+      "y": 520,
       "width": 350,
       "height": 60,
-      "angle": 0,
-      "strokeColor": "#1e1e1e",
-      "backgroundColor": "#74c0fc",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 1,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "roundness": {
-        "type": 3
-      },
-      "seed": 200000018,
-      "versionNonce": 1,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1735220523347,
-      "link": null,
-      "locked": false,
-      "text": {
-        "text": "部署方案：Docker + Docker-compose\n前端 + 后端 + MySQL + Redis + Nginx",
-        "fontSize": 12,
-        "fontFamily": 1,
-        "textAlign": "center",
-        "verticalAlign": "middle",
-        "baseline": 10
-      }
+      "backgroundColor": "#74c0fc"
+    },
+    {
+      "type": "text",
+      "x": 100,
+      "y": 540,
+      "width": 250,
+      "height": 25,
+      "text": "部署：Docker + Docker-compose",
+      "fontSize": 14
     }
   ],
   "appState": {
-    "gridSize": null,
     "viewBackgroundColor": "#ffffff"
-  },
-  "files": {}
+  }
 }
