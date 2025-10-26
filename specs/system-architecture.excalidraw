@@ -1,0 +1,327 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "type": "text",
+      "x": 100,
+      "y": 50,
+      "width": 200,
+      "height": 25,
+      "text": "系统架构图",
+      "fontSize": 20
+    },
+    {
+      "type": "rectangle",
+      "x": 100,
+      "y": 100,
+      "width": 200,
+      "height": 100,
+      "backgroundColor": "#4c6ef5"
+    },
+    {
+      "type": "text",
+      "x": 150,
+      "y": 130,
+      "width": 100,
+      "height": 50,
+      "text": "前端层\nVue 3\nTypeScript",
+      "fontSize": 14
+    },
+    {
+      "type": "rectangle",
+      "x": 100,
+      "y": 250,
+      "width": 200,
+      "height": 100,
+      "backgroundColor": "#40c057"
+    },
+    {
+      "type": "text",
+      "x": 150,
+      "y": 280,
+      "width": 100,
+      "height": 50,
+      "text": "后端层\nGo + Gin\nJWT认证",
+      "fontSize": 14
+    },
+    {
+      "type": "rectangle",
+      "x": 50,
+      "y": 400,
+      "width": 150,
+      "height": 80,
+      "backgroundColor": "#fab005"
+    },
+    {
+      "type": "text",
+      "x": 75,
+      "y": 430,
+      "width": 100,
+      "height": 25,
+      "text": "MySQL 8.0",
+      "fontSize": 14
+    },
+    {
+      "type": "rectangle",
+      "x": 250,
+      "y": 400,
+      "width": 150,
+      "height": 80,
+      "backgroundColor": "#ff6b6b"
+    },
+    {
+      "type": "text",
+      "x": 275,
+      "y": 430,
+      "width": 100,
+      "height": 25,
+      "text": "Redis",
+      "fontSize": 14
+    },
+    {
+      "type": "rectangle",
+      "x": 450,
+      "y": 50,
+      "width": 400,
+      "height": 300,
+      "backgroundColor": "transparent",
+      "strokeStyle": "dashed"
+    },
+    {
+      "type": "text",
+      "x": 460,
+      "y": 60,
+      "width": 100,
+      "height": 25,
+      "text": "抽奖核心流程",
+      "fontSize": 16
+    },
+    {
+      "type": "rectangle",
+      "x": 480,
+      "y": 100,
+      "width": 120,
+      "height": 60,
+      "backgroundColor": "#e9ecef"
+    },
+    {
+      "type": "text",
+      "x": 510,
+      "y": 120,
+      "width": 60,
+      "height": 25,
+      "text": "JWT认证",
+      "fontSize": 12
+    },
+    {
+      "type": "rectangle",
+      "x": 620,
+      "y": 100,
+      "width": 120,
+      "height": 60,
+      "backgroundColor": "#e9ecef"
+    },
+    {
+      "type": "text",
+      "x": 640,
+      "y": 120,
+      "width": 80,
+      "height": 25,
+      "text": "业务验证",
+      "fontSize": 12
+    },
+    {
+      "type": "rectangle",
+      "x": 480,
+      "y": 180,
+      "width": 120,
+      "height": 60,
+      "backgroundColor": "#e9ecef"
+    },
+    {
+      "type": "text",
+      "x": 500,
+      "y": 200,
+      "width": 80,
+      "height": 25,
+      "text": "抽奖算法",
+      "fontSize": 12
+    },
+    {
+      "type": "rectangle",
+      "x": 620,
+      "y": 180,
+      "width": 120,
+      "height": 60,
+      "backgroundColor": "#e9ecef"
+    },
+    {
+      "type": "text",
+      "x": 640,
+      "y": 200,
+      "width": 80,
+      "height": 25,
+      "text": "事务处理",
+      "fontSize": 12
+    },
+    {
+      "type": "rectangle",
+      "x": 550,
+      "y": 260,
+      "width": 120,
+      "height": 60,
+      "backgroundColor": "#e9ecef"
+    },
+    {
+      "type": "text",
+      "x": 570,
+      "y": 280,
+      "width": 80,
+      "height": 25,
+      "text": "返回结果",
+      "fontSize": 12
+    },
+    {
+      "type": "rectangle",
+      "x": 900,
+      "y": 50,
+      "width": 180,
+      "height": 100,
+      "backgroundColor": "#ff8787"
+    },
+    {
+      "type": "text",
+      "x": 920,
+      "y": 70,
+      "width": 140,
+      "height": 60,
+      "text": "防刷机制\n频率限制\n活动时间控制\n用户状态检查",
+      "fontSize": 11
+    },
+    {
+      "type": "rectangle",
+      "x": 900,
+      "y": 180,
+      "width": 180,
+      "height": 100,
+      "backgroundColor": "#74c0fc"
+    },
+    {
+      "type": "text",
+      "x": 920,
+      "y": 200,
+      "width": 140,
+      "height": 60,
+      "text": "库存控制\n严格防超卖\n数据库事务\nRedis缓存",
+      "fontSize": 11
+    },
+    {
+      "type": "rectangle",
+      "x": 900,
+      "y": 310,
+      "width": 180,
+      "height": 100,
+      "backgroundColor": "#a9e34b"
+    },
+    {
+      "type": "text",
+      "x": 920,
+      "y": 330,
+      "width": 140,
+      "height": 60,
+      "text": "概率算法\n权重法/区间法\n公平性保证\n实时生效",
+      "fontSize": 11
+    },
+    {
+      "type": "rectangle",
+      "x": 450,
+      "y": 400,
+      "width": 400,
+      "height": 120,
+      "backgroundColor": "transparent",
+      "strokeStyle": "dashed"
+    },
+    {
+      "type": "text",
+      "x": 460,
+      "y": 410,
+      "width": 100,
+      "height": 25,
+      "text": "压测体系",
+      "fontSize": 16
+    },
+    {
+      "type": "rectangle",
+      "x": 480,
+      "y": 450,
+      "width": 100,
+      "height": 60,
+      "backgroundColor": "#ffd43b"
+    },
+    {
+      "type": "text",
+      "x": 500,
+      "y": 470,
+      "width": 60,
+      "height": 25,
+      "text": "Vegeta",
+      "fontSize": 12
+    },
+    {
+      "type": "rectangle",
+      "x": 600,
+      "y": 450,
+      "width": 100,
+      "height": 60,
+      "backgroundColor": "#ffd43b"
+    },
+    {
+      "type": "text",
+      "x": 620,
+      "y": 470,
+      "width": 60,
+      "height": 25,
+      "text": "批量注册",
+      "fontSize": 12
+    },
+    {
+      "type": "rectangle",
+      "x": 720,
+      "y": 450,
+      "width": 100,
+      "height": 60,
+      "backgroundColor": "#ffd43b"
+    },
+    {
+      "type": "text",
+      "x": 740,
+      "y": 470,
+      "width": 60,
+      "height": 25,
+      "text": "数据验证",
+      "fontSize": 12
+    },
+    {
+      "type": "rectangle",
+      "x": 50,
+      "y": 520,
+      "width": 350,
+      "height": 60,
+      "backgroundColor": "#74c0fc"
+    },
+    {
+      "type": "text",
+      "x": 100,
+      "y": 540,
+      "width": 250,
+      "height": 25,
+      "text": "部署：Docker + Docker-compose",
+      "fontSize": 14
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff"
+  }
+}
