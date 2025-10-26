@@ -41,9 +41,10 @@
 
 ### 后端 (Go)
 - **框架**：Gin 或 Echo
-- **数据库**：MySQL + Redis
-- **缓存**：Redis用于库存缓存和并发控制
+- **数据库**：MySQL 8.0（主数据库）
+- **缓存**：Redis（库存缓存和会话管理）
 - **认证**：JWT Token
+- **压测支持**：内置性能监控指标
 
 ### 前端 (Vue)
 - **框架**：Vue 3 + TypeScript
@@ -61,6 +62,39 @@
 - **响应时间**：< 500ms
 - **准确率**：100%业务正确性
 - **可用性**：99.9%
+
+## 压测方案设计
+
+### 压测目标
+- **验证并发能力**：找出系统的实际并发上限
+- **验证业务正确性**：高并发下无超卖、无重复中奖
+- **性能基线**：建立v1版本性能基准数据
+
+### 压测场景
+1. **注册压测**：批量注册1000万测试账号
+2. **登录压测**：测试登录接口并发能力
+3. **抽奖压测**：模拟真实抽奖场景
+4. **混合压测**：登录+抽奖混合场景
+
+### 压测工具
+- **Vegeta**：Go语言编写的HTTP压测工具
+- **自定义脚本**：批量注册和用户登录脚本
+- **数据验证**：压测后验证库存数据一致性
+
+### 压测指标
+- **QPS**：每秒查询数
+- **响应时间**：P50、P95、P99延迟
+- **错误率**：业务错误和系统错误
+- **并发数**：同时在线用户数
+- **资源使用**：CPU、内存、数据库连接数
+
+### 压测步骤
+1. **环境准备**：Docker-compose启动完整环境
+2. **数据准备**：批量注册测试用户，配置奖品数据
+3. **基准测试**：单机单接口压测，建立基线
+4. **业务测试**：完整抽奖流程压测
+5. **数据验证**：检查库存一致性、中奖记录完整性
+6. **报告输出**：生成压测报告和性能分析
 
 ## 数据模型设计
 
@@ -104,6 +138,9 @@ id, user_id, prize_id, prize_name, created_at
 - PUT /admin/api/prizes/{id} - 更新奖品
 - DELETE /admin/api/prizes/{id} - 删除奖品
 - GET /admin/api/statistics - 获取统计数据
+- GET /admin/api/activities - 获取活动列表
+- POST /admin/api/activities - 创建活动
+- PUT /admin/api/activities/{id} - 更新活动状态
 
 ## 演进计划
 - **specs分支**：规格设计和基础框架
@@ -117,9 +154,37 @@ id, user_id, prize_id, prize_name, created_at
 - **错误处理**：库存不足、活动结束等需要友好提示
 - **实时更新**：全局中奖历史可接受1秒缓存延迟
 
+## 压测工具设计
+
+### 批量注册脚本
+```bash
+# 批量注册1000万用户
+./scripts/batch-register.sh --count=10000000 --concurrent=100
+```
+
+### 压测执行脚本
+```bash
+# 登录压测
+echo "POST http://localhost:8080/api/auth/login" | vegeta attack -duration=30s -rate=1000 | vegeta report
+
+# 抽奖压测（需要携带token）
+echo "POST http://localhost:8080/api/lottery/draw" | vegeta attack -duration=60s -rate=500 | vegeta report
+```
+
+### 数据验证脚本
+```bash
+# 验证库存一致性
+./scripts/validate-inventory.sh
+
+# 验证无重复中奖
+./scripts/validate-duplicate-wins.sh
+```
+
 ## 待讨论事项
 1. 具体的概率算法实现方式（权重法 vs 区间法）
 2. 前端转盘的动画实现方案（CSS动画 vs Canvas）
 3. 管理后台是否需要登录权限控制
 4. 全局中奖历史的缓存策略
 5. 错误码和异常处理规范
+6. MySQL8的表引擎选择（InnoDB）和索引设计
+7. 是否需要连接池监控和慢查询日志
