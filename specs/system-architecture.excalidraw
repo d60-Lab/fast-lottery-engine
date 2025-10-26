@@ -43,7 +43,9 @@
       "y": 280,
       "width": 100,
       "height": 50,
-      "text": "后端层\nGo + Gin\nJWT认证",
+      "text": "后端层
+Rust + Axum
+JWT认证",
       "fontSize": 14
     },
     {
@@ -60,7 +62,7 @@
       "y": 430,
       "width": 100,
       "height": 25,
-      "text": "MySQL 8.0",
+      "text": "PostgreSQL",
       "fontSize": 14
     },
     {
@@ -214,7 +216,10 @@
       "y": 200,
       "width": 140,
       "height": 60,
-      "text": "库存控制\n严格防超卖\n数据库事务\nRedis缓存",
+      "text": "库存控制
+严格防超卖
+PostgreSQL事务
+Redis缓存",
       "fontSize": 11
     },
     {

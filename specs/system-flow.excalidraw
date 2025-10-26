@@ -203,7 +203,7 @@
       "y": 350,
       "width": 150,
       "height": 25,
-      "text": "MySQL数据库",
+      "text": "PostgreSQL数据库",
       "fontSize": 16
     }
   ],
