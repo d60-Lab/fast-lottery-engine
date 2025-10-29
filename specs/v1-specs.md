@@ -180,11 +180,285 @@ echo "POST http://localhost:8080/api/lottery/draw" | vegeta attack -duration=60s
 ./scripts/validate-duplicate-wins.sh
 ```
 
-## 待讨论事项
-1. 具体的概率算法实现方式（权重法 vs 区间法）
-2. 前端转盘的动画实现方案（CSS动画 vs Canvas）
-3. 管理后台免登录实现
-4. 错误码和异常处理规范
-5. MySQL8的表引擎选择（InnoDB）和索引设计
-6. 是否需要连接池监控和慢查询日志
-7. 活动状态管理（未开始/进行中/已结束/暂停）
+## 防超卖方案
+
+### 核心策略：概率前置过滤 + Redis原子操作 + 数据库最终一致性
+
+#### 性能优化：概率前置过滤
+- **80%请求**：直接返回"谢谢惠顾"，不进入核心逻辑
+- **20%请求**：走完整的库存扣减和概率计算
+- **性能提升**：从100,000 QPS提升到500,000 QPS
+
+#### 实现流程：
+1. **概率前置过滤**：80%请求直接返回未中奖
+2. **Redis预减库存**：使用`DECRBY`原子操作确保库存不超卖
+3. **概率计算**：基于Redis中的实时库存计算中奖概率
+4. **中奖记录**：记录中奖信息到Redis
+5. **异步同步**：后台任务同步Redis数据到PostgreSQL
+
+#### 关键技术点：
+- 概率前置过滤大幅减少后端压力
+- Redis原子操作保证并发安全
+- 库存不足时立即返回"未中奖"
+- 异步处理保证最终一致性
+- 监控Redis和数据库数据差异
+
+#### 伪代码示例：
+```rust
+// 1. 概率前置过滤（80%直接返回谢谢惠顾）
+if rand::random::<f64>() < 0.8 {
+    return LotteryResult::NotWon;
+}
+
+// 2. Redis预减库存
+let remaining = redis.decrby("prize:1:stock", 1);
+if remaining < 0 {
+    // 库存不足，直接返回未中奖
+    return LotteryResult::NotWon;
+}
+
+// 3. 计算中奖概率
+let probability = calculate_probability(prize_id);
+if rand::random::<f64>() < probability {
+    // 4. 记录中奖
+    let record_id = save_to_redis(prize_id, user_id);
+    // 5. 异步同步到数据库
+    async_sync_to_db(record_id);
+    return LotteryResult::Won(prize_id);
+} else {
+    // 补偿Redis库存
+    redis.incrby("prize:1:stock", 1);
+    return LotteryResult::NotWon;
+}
+```
+
+## 前端转盘动画方案
+
+### 方案对比
+
+#### CSS动画方案
+**优势**：
+- **性能优秀**：GPU硬件加速，流畅度高
+- **开发简单**：代码简洁，维护成本低
+- **响应式友好**：自动适配不同屏幕尺寸
+- **兼容性好**：主流浏览器完美支持
+
+**劣势**：
+- 复杂动画效果受限
+- 精确控制旋转角度较复杂
+
+#### Canvas方案
+**优势**：
+- **效果丰富**：可定制复杂动画和特效
+- **精确控制**：逐帧动画，控制精细
+- **图形能力强**：适合复杂图形绘制
+
+**劣势**：
+- **性能开销大**：CPU渲染，内存占用高
+- **开发复杂**：代码复杂度高
+- **适配困难**：响应式实现复杂
+
+### 技术选型：CSS动画
+**选择理由**：
+- 抽奖转盘是简单的旋转动画，CSS完全胜任
+- 性能要求高，CSS动画GPU加速效果更好
+- 开发维护简单，适合快速迭代
+- 移动端兼容性更好
+
+### CSS动画实现要点
+```css
+.wheel {
+  transition: transform 3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform: rotate(0deg);
+}
+
+.wheel.spinning {
+  transform: rotate(1440deg); /* 4圈 + 目标角度 */
+}
+```
+
+## 管理后台认证方案
+
+### 方案：硬编码账号密码 + .env管理
+
+#### 实现方式：
+- 使用`.env`文件存储管理员账号密码
+- 硬编码在配置中，不存储在数据库
+- 简单的用户名密码认证
+- JWT token返回给前端
+
+#### .env配置示例：
+```env
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=your_secure_password
+JWT_SECRET=your_jwt_secret_key
+```
+
+#### 认证流程：
+1. 管理员输入用户名密码
+2. 后端验证与`.env`配置匹配
+3. 生成JWT token返回
+4. 前端存储token用于后续请求
+
+## 概率算法实现方案
+
+### 选择：权重法
+
+#### 实现原理：
+- 每个奖品分配一个整数权重
+- 总权重 = 所有奖品权重之和
+- 随机数范围：[1, 总权重]
+- 根据随机数落在哪个奖品的权重区间确定中奖结果
+
+#### 示例：
+```
+奖品A：权重10
+奖品B：权重20  
+奖品C：权重30
+谢谢惠顾：权重40
+总权重 = 10 + 20 + 30 + 40 = 100
+
+随机数范围：[1, 100]
+- [1,10]：奖品A
+- [11,30]：奖品B
+- [31,60]：奖品C
+- [61,100]：谢谢惠顾
+```
+
+#### 优点：
+- 实现简单，计算高效
+- 适合奖品数量不多的场景
+- 整数运算，无精度问题
+
+#### Rust实现伪代码：
+```rust
+fn calculate_prize(prizes: &[Prize]) -> Option<u32> {
+    let total_weight: u32 = prizes.iter().map(|p| p.weight).sum();
+    let random_num = rand::thread_rng().gen_range(1..=total_weight);
+    
+    let mut current_weight = 0;
+    for prize in prizes {
+        current_weight += prize.weight;
+        if random_num <= current_weight {
+            return Some(prize.id);
+        }
+    }
+    None
+}
+```
+
+## 错误码和异常处理规范
+
+### 错误码设计原则
+- **统一格式**：HTTP状态码 + 业务错误码
+- **分层设计**：系统级错误、业务逻辑错误、参数校验错误
+- **可读性强**：错误码包含模块信息和错误类型
+
+### 错误码结构
+```
+HTTP状态码: 400/500
+业务错误码: 模块(2位) + 错误类型(2位) + 具体错误(2位)
+示例: 01-01-01 (用户模块-认证错误-密码错误)
+```
+
+### 异常处理策略
+- **前端友好**：返回结构化的错误信息
+- **日志记录**：记录详细错误堆栈用于排查
+- **安全考虑**：生产环境不暴露敏感信息
+- **重试机制**：网络错误自动重试
+
+### 响应格式
+```json
+{
+  "code": 400,
+  "error_code": "01-01-01",
+  "message": "密码错误",
+  "data": null
+}
+```
+
+## PostgreSQL表引擎和索引设计
+
+### 表引擎选择
+- **默认使用InnoDB**：支持事务、行级锁
+- **无需特殊引擎**：PostgreSQL默认表引擎已足够
+
+### 核心表索引设计
+
+#### 用户表 (users)
+```sql
+-- 主键索引
+PRIMARY KEY (id)
+-- 用户名唯一索引
+UNIQUE INDEX idx_users_username (username)
+-- 创建时间索引（用于查询活跃用户）
+INDEX idx_users_created_at (created_at)
+```
+
+#### 抽奖记录表 (lottery_records)
+```sql
+-- 主键索引
+PRIMARY KEY (id)
+-- 用户ID索引（查询用户中奖历史）
+INDEX idx_records_user_id (user_id)
+-- 奖品ID索引（统计奖品中奖情况）
+INDEX idx_records_prize_id (prize_id)
+-- 创建时间索引（时间范围查询）
+INDEX idx_records_created_at (created_at)
+-- 复合索引（用户+时间）
+INDEX idx_records_user_created (user_id, created_at)
+```
+
+#### 奖品表 (prizes)
+```sql
+-- 主键索引
+PRIMARY KEY (id)
+-- 活动ID索引
+INDEX idx_prizes_activity_id (activity_id)
+-- 库存索引（快速查询有库存的奖品）
+INDEX idx_prizes_stock (stock)
+```
+
+### 索引优化策略
+- **读多写少**：适当增加索引
+- **复合索引**：优先考虑常用查询组合
+- **覆盖索引**：减少回表查询
+- **定期维护**：清理无效索引，重建碎片索引
+
+## 性能监控和日志配置
+
+### 连接池监控
+- **启用连接池监控**：监控连接数、空闲连接、等待连接
+- **指标收集**：最大连接数、活跃连接数、等待连接数
+- **告警机制**：连接池满时告警
+
+### 慢查询日志
+- **启用慢查询日志**：记录执行时间超过阈值的SQL
+- **阈值设置**：建议100ms，根据压测结果调整
+- **日志分析**：定期分析慢查询，优化SQL和索引
+
+### 压测指标监控
+- **QPS监控**：实时监控系统吞吐量
+- **响应时间**：P50、P95、P99延迟
+- **错误率**：HTTP错误码统计
+- **资源使用**：CPU、内存、网络I/O
+
+## 活动状态管理
+
+### 状态定义
+- **未开始**：活动配置完成，等待开始时间
+- **进行中**：活动正在进行，用户可以抽奖
+- **已结束**：活动结束时间到达，停止抽奖
+- **暂停**：管理员手动暂停活动
+
+### 状态流转规则
+- 未开始 → 进行中：到达开始时间自动切换
+- 进行中 → 已结束：到达结束时间自动切换
+- 进行中 → 暂停：管理员手动暂停
+- 暂停 → 进行中：管理员手动恢复
+- 暂停 → 已结束：到达结束时间自动结束
+
+### 状态验证
+- 抽奖前检查活动状态
+- 只有"进行中"状态允许抽奖
+- 状态变更时清理相关缓存
