@@ -4,6 +4,7 @@ use crate::{
     error::{AppError, AppResult},
     models::{Activity, Prize, ActivityStatus},
     routes::AppState,
+    services::{activity_service, prize_service},
 };
 use axum::{extract::State, Json};
 use axum_extra::{
@@ -45,9 +46,7 @@ pub async fn list_activities(
     TypedHeader(Authorization(bearer)): TypedHeader<Authorization<Bearer>>,
 ) -> AppResult<Json<serde_json::Value>> {
     ensure_admin(&state, bearer.token())?;
-    let rows: Vec<Activity> = sqlx::query_as(r#"SELECT id, name, description, start_time, end_time, status, created_at, updated_at FROM activities ORDER BY created_at DESC"#)
-        .fetch_all(&state.pool)
-        .await?;
+    let rows: Vec<Activity> = activity_service::list_activities(&state.pool).await?;
     Ok(Json(serde_json::json!({"activities": rows})))
 }
 
@@ -67,18 +66,7 @@ pub async fn create_activity(
 ) -> AppResult<Json<serde_json::Value>> {
     ensure_admin(&state, bearer.token())?;
     let id = Uuid::new_v4();
-    sqlx::query(
-        r#"INSERT INTO activities (id, name, description, start_time, end_time, status, created_at, updated_at)
-           VALUES ($1,$2,$3,$4,$5,$6, now(), now())"#
-    )
-    .bind(id)
-    .bind(payload.name)
-    .bind(payload.description)
-    .bind(payload.start_time)
-    .bind(payload.end_time)
-    .bind(payload.status)
-    .execute(&state.pool)
-    .await?;
+    activity_service::create_activity(&state.pool, id, payload.name, payload.description, payload.start_time, payload.end_time, payload.status).await?;
     Ok(Json(serde_json::json!({"id": id})))
 }
 
@@ -87,9 +75,7 @@ pub async fn list_prizes(
     TypedHeader(Authorization(bearer)): TypedHeader<Authorization<Bearer>>,
 ) -> AppResult<Json<serde_json::Value>> {
     ensure_admin(&state, bearer.token())?;
-    let rows: Vec<Prize> = sqlx::query_as(r#"SELECT id, activity_id, name, description, total_count, remaining_count, probability, is_enabled, created_at, updated_at FROM prizes ORDER BY created_at DESC"#)
-        .fetch_all(&state.pool)
-        .await?;
+    let rows: Vec<Prize> = prize_service::list_prizes(&state.pool).await?;
     Ok(Json(serde_json::json!({"prizes": rows})))
 }
 
@@ -110,18 +96,47 @@ pub async fn create_prize(
 ) -> AppResult<Json<serde_json::Value>> {
     ensure_admin(&state, bearer.token())?;
     let id = Uuid::new_v4();
-    sqlx::query(
-        r#"INSERT INTO prizes (id, activity_id, name, description, total_count, remaining_count, probability, is_enabled, created_at, updated_at)
-           VALUES ($1,$2,$3,$4,$5,$5,$6,$7, now(), now())"#
-    )
-    .bind(id)
-    .bind(payload.activity_id)
-    .bind(payload.name)
-    .bind(payload.description)
-    .bind(payload.total_count)
-    .bind(payload.probability)
-    .bind(payload.is_enabled)
-    .execute(&state.pool)
-    .await?;
+    prize_service::create_prize(&state.pool, id, payload.activity_id, payload.name, payload.description, payload.total_count, payload.probability, payload.is_enabled).await?;
     Ok(Json(serde_json::json!({"id": id})))
+}
+
+#[derive(Deserialize)]
+pub struct BenchMintReq { pub count: usize, pub prefix: Option<String> }
+
+pub async fn bench_mint_tokens(
+    State(state): State<AppState>,
+    TypedHeader(Authorization(bearer)): TypedHeader<Authorization<Bearer>>,
+    Json(payload): Json<BenchMintReq>,
+) -> AppResult<Json<serde_json::Value>> {
+    ensure_admin(&state, bearer.token())?;
+    let prefix = payload.prefix.unwrap_or_else(|| "bench_user_".to_string());
+    let mut tokens = Vec::with_capacity(payload.count);
+    let mut tx = state.pool.begin().await?;
+    for i in 0..payload.count {
+        let uname = format!("{}{}", prefix, i);
+        // upsert user quickly with placeholder hash
+        let uid: Option<Uuid> = sqlx::query_scalar("SELECT id FROM users WHERE username=$1")
+            .bind(&uname)
+            .fetch_optional(&mut *tx)
+            .await?;
+        let uid = match uid {
+            Some(id) => id,
+            None => {
+                let id = Uuid::new_v4();
+                sqlx::query(r#"INSERT INTO users (id, username, password_hash, email, created_at, updated_at)
+                    VALUES ($1,$2,$3,$4, now(), now())"#)
+                    .bind(id)
+                    .bind(&uname)
+                    .bind("BENCH")
+                    .bind(Option::<String>::None)
+                    .execute(&mut *tx)
+                    .await?;
+                id
+            }
+        };
+        let token = sign_jwt(&state.cfg, &uid.to_string(), false)?;
+        tokens.push(token);
+    }
+    tx.commit().await?;
+    Ok(Json(serde_json::json!({"tokens": tokens})))
 }

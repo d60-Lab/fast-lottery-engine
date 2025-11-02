@@ -28,10 +28,10 @@ pub fn auth_routes(pool: &PgPool, cfg: &Config) -> Router {
         .with_state(state)
 }
 
-pub fn user_routes(pool: &PgPool) -> Router {
+pub fn user_routes(pool: &PgPool, cfg: &Config) -> Router {
     let state = Arc::new(StateData {
         pool: pool.clone(),
-        cfg: Config::from_env().expect("cfg"),
+        cfg: cfg.clone(),
     });
     Router::new()
         .route("/api/user/profile", get(self::routes_user::profile))
@@ -39,10 +39,10 @@ pub fn user_routes(pool: &PgPool) -> Router {
         .with_state(state)
 }
 
-pub fn lottery_routes(pool: &PgPool) -> Router {
+pub fn lottery_routes(pool: &PgPool, cfg: &Config) -> Router {
     let state = Arc::new(StateData {
         pool: pool.clone(),
-        cfg: Config::from_env().expect("cfg"),
+        cfg: cfg.clone(),
     });
     Router::new()
         .route("/api/lottery/draw", post(self::routes_lottery::draw))
@@ -71,6 +71,10 @@ pub fn admin_routes(pool: &PgPool, cfg: &Config) -> Router {
         .route(
             "/admin/api/prizes",
             get(self::routes_admin::list_prizes).post(self::routes_admin::create_prize),
+        )
+        .route(
+            "/admin/api/bench/mint-tokens",
+            post(self::routes_admin::bench_mint_tokens),
         )
         .with_state(state)
 }

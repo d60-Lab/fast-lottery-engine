@@ -17,6 +17,7 @@ mod db;
 mod error;
 mod models;
 mod routes;
+mod services;
 
 use crate::{
     config::Config,
@@ -39,8 +40,8 @@ async fn main() -> anyhow::Result<()> {
 
     let api = Router::new()
         .merge(auth_routes(&pool, &cfg))
-        .merge(user_routes(&pool))
-        .merge(lottery_routes(&pool))
+        .merge(user_routes(&pool, &cfg))
+        .merge(lottery_routes(&pool, &cfg))
         .merge(admin_routes(&pool, &cfg))
         .route("/healthz", get(|| async { "ok" }));
 
