@@ -2,7 +2,7 @@
 use crate::{
     auth::{sign_jwt, verify_jwt},
     error::{AppError, AppResult},
-    models::{Activity, Prize},
+    models::{Activity, Prize, ActivityStatus},
     routes::AppState,
 };
 use axum::{extract::State, Json};
@@ -45,7 +45,7 @@ pub async fn list_activities(
     TypedHeader(Authorization(bearer)): TypedHeader<Authorization<Bearer>>,
 ) -> AppResult<Json<serde_json::Value>> {
     ensure_admin(&state, bearer.token())?;
-    let rows: Vec<Activity> = sqlx::query_as(r#"SELECT id, name, description, start_time, end_time, status::text as status, created_at, updated_at FROM activities ORDER BY created_at DESC"#)
+    let rows: Vec<Activity> = sqlx::query_as(r#"SELECT id, name, description, start_time, end_time, status, created_at, updated_at FROM activities ORDER BY created_at DESC"#)
         .fetch_all(&state.pool)
         .await?;
     Ok(Json(serde_json::json!({"activities": rows})))
@@ -57,7 +57,7 @@ pub struct CreateActivityDto {
     pub description: Option<String>,
     pub start_time: DateTime<Utc>,
     pub end_time: DateTime<Utc>,
-    pub status: String,
+    pub status: ActivityStatus,
 }
 
 pub async fn create_activity(
@@ -69,7 +69,7 @@ pub async fn create_activity(
     let id = Uuid::new_v4();
     sqlx::query(
         r#"INSERT INTO activities (id, name, description, start_time, end_time, status, created_at, updated_at)
-           VALUES ($1,$2,$3,$4,$5, CAST($6 AS activity_status), now(), now())"#
+           VALUES ($1,$2,$3,$4,$5,$6, now(), now())"#
     )
     .bind(id)
     .bind(payload.name)

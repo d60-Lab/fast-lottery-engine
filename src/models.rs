@@ -2,6 +2,7 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use sqlx::FromRow;
+use sqlx::Type;
 use uuid::Uuid;
 
 #[derive(Debug, Clone, FromRow, Serialize)]
@@ -22,9 +23,19 @@ pub struct Activity {
     pub description: Option<String>,
     pub start_time: DateTime<Utc>,
     pub end_time: DateTime<Utc>,
-    pub status: String, // planned, ongoing, paused, ended
+    pub status: ActivityStatus,
     pub created_at: DateTime<Utc>,
     pub updated_at: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Type)]
+#[sqlx(type_name = "activity_status", rename_all = "lowercase")]
+#[serde(rename_all = "lowercase")]
+pub enum ActivityStatus {
+    Planned,
+    Ongoing,
+    Paused,
+    Ended,
 }
 
 #[derive(Debug, Clone, FromRow, Serialize)]
