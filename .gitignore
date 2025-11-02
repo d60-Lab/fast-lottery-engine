@@ -27,6 +27,10 @@ go.work.sum
 # env file
 .env
 
+# Rust build artifacts
+target/
+**/*.rs.bk
+
 # Editor/IDE
 # .idea/
 # .vscode/
