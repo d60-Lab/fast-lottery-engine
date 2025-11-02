@@ -11,13 +11,20 @@
  CREATE INDEX IF NOT EXISTS idx_users_created_at ON users(created_at);
 
  -- activities
+ -- define enum type for activity status for clarity and safety
+ DO $$ BEGIN
+   CREATE TYPE activity_status AS ENUM ('planned','ongoing','paused','ended');
+ EXCEPTION
+   WHEN duplicate_object THEN NULL;
+ END $$;
+
  CREATE TABLE IF NOT EXISTS activities (
    id UUID PRIMARY KEY,
    name TEXT NOT NULL,
    description TEXT NULL,
    start_time TIMESTAMPTZ NOT NULL,
    end_time TIMESTAMPTZ NOT NULL,
-   status TEXT NOT NULL,
+   status activity_status NOT NULL,
    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
    updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
  );
