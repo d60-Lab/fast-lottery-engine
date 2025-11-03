@@ -10,6 +10,7 @@ fn base_url() -> String {
 
 #[tokio::test]
 async fn draw_flow_with_new_user() {
+    let _ = dotenvy::dotenv();
     let tdb = TestPg::new(base_url(), Path::new("./migrations"));
     let pool = tdb.get_pool().await;
 

@@ -17,6 +17,7 @@ fn env_usize(name: &str, default_: usize) -> usize {
 #[tokio::test]
 #[ignore]
 async fn perf_draw_concurrency() {
+    let _ = dotenvy::dotenv();
     let ops = env_usize("PERF_OPS", 500);
     let conc = env_usize("PERF_CONCURRENCY", 50);
 

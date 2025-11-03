@@ -68,5 +68,29 @@ async fn main() -> anyhow::Result<()> {
     }
 
     println!("prepared inventory: activity={} stock={} prob={}", act_id, desired_stock, probability);
+
+    // Optionally seed Redis stocks (and reset sold counters)
+    if let Ok(redis_url) = std::env::var("REDIS_URL") {
+        if let Ok(client) = redis::Client::open(redis_url) {
+            if let Ok(mut conn) = client.get_async_connection().await {
+                let rows: Vec<(Uuid, i64)> = sqlx::query_as(
+                    "SELECT id, remaining_count FROM prizes WHERE activity_id=$1 AND is_enabled=true"
+                )
+                .bind(act_id)
+                .fetch_all(&pool)
+                .await
+                .unwrap_or_default();
+                let mut cnt = 0usize;
+                for (pid, remain) in rows {
+                    let stock_key = format!("lottery:stock:{}", pid);
+                    let sold_key = format!("lottery:sold:{}", pid);
+                    let _ : redis::RedisResult<()> = redis::cmd("SET").arg(&[stock_key, remain.to_string()]).query_async(&mut conn).await;
+                    let _ : redis::RedisResult<()> = redis::cmd("DEL").arg(&[sold_key]).query_async(&mut conn).await;
+                    cnt += 1;
+                }
+                println!("seeded redis for {} prizes", cnt);
+            }
+        }
+    }
     Ok(())
 }

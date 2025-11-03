@@ -10,6 +10,7 @@ fn base_url() -> String {
 
 #[tokio::test]
 async fn migrations_and_seed_exist() {
+    let _ = dotenvy::dotenv();
     let tdb = TestPg::new(base_url(), Path::new("./migrations"));
     let pool = tdb.get_pool().await;
 
@@ -29,6 +30,7 @@ async fn migrations_and_seed_exist() {
 
 #[tokio::test]
 async fn prize_inventory_decrements_atomically() {
+    let _ = dotenvy::dotenv();
     let tdb = TestPg::new(base_url(), Path::new("./migrations"));
     let pool = tdb.get_pool().await;
 

@@ -175,15 +175,15 @@ async fn main() -> anyhow::Result<()> {
     lat.truncate(completed);
     lat.sort_unstable();
 
-    let q = |p: f64| -> u128 {
-        if lat.is_empty() { return 0; }
+    let q_ms = |p: f64| -> f64 {
+        if lat.is_empty() { return 0.0; }
         let idx = ((lat.len() as f64) * p).ceil() as usize - 1;
-        lat[idx.min(lat.len()-1)]
+        (lat[idx.min(lat.len()-1)] as f64) / 1000.0
     };
-    let avg = if !lat.is_empty() { (lat.iter().sum::<u128>() as f64 / lat.len() as f64) as u128 } else { 0 };
+    let avg_ms: f64 = if !lat.is_empty() { (lat.iter().sum::<u128>() as f64 / lat.len() as f64) / 1000.0 } else { 0.0 };
     let qps = (completed as f64) / elapsed.as_secs_f64();
-    println!("draw bench completed: ops={} done={} time={:?} qps={:.2} avg={}us p50={}us p95={}us p99={}us",
-        ops, completed, elapsed, qps, avg, q(0.50), q(0.95), q(0.99));
+    println!("draw bench completed: ops={} done={} time={:?} qps={:.2} avg={:.2}ms p50={:.2}ms p95={:.2}ms p99={:.2}ms",
+        ops, completed, elapsed, qps, avg_ms, q_ms(0.50), q_ms(0.95), q_ms(0.99));
 
     Ok(())
 }

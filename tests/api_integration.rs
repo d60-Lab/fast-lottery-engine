@@ -24,6 +24,7 @@ fn test_cfg(db_url: String) -> Config {
 
 #[tokio::test]
 async fn full_flow_register_login_draw() {
+    let _ = dotenvy::dotenv();
     let tdb = TestPg::new(base_url(), Path::new("./migrations"));
     let pool = tdb.get_pool().await;
     let cfg = test_cfg("unused".to_string());
