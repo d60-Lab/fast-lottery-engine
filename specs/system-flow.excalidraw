@@ -1,0 +1,213 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "type": "text",
+      "x": 100,
+      "y": 50,
+      "width": 200,
+      "height": 25,
+      "text": "抽奖系统流程图",
+      "fontSize": 20
+    },
+    {
+      "type": "rectangle",
+      "x": 100,
+      "y": 100,
+      "width": 150,
+      "height": 80,
+      "backgroundColor": "#a5d8ff"
+    },
+    {
+      "type": "text",
+      "x": 125,
+      "y": 130,
+      "width": 100,
+      "height": 25,
+      "text": "用户登录/注册",
+      "fontSize": 16
+    },
+    {
+      "type": "rectangle",
+      "x": 300,
+      "y": 100,
+      "width": 150,
+      "height": 80,
+      "backgroundColor": "#b2f2bb"
+    },
+    {
+      "type": "text",
+      "x": 325,
+      "y": 130,
+      "width": 100,
+      "height": 25,
+      "text": "抽奖页面",
+      "fontSize": 16
+    },
+    {
+      "type": "rectangle",
+      "x": 500,
+      "y": 100,
+      "width": 150,
+      "height": 80,
+      "backgroundColor": "#ffd43b"
+    },
+    {
+      "type": "text",
+      "x": 525,
+      "y": 130,
+      "width": 100,
+      "height": 25,
+      "text": "点击抽奖",
+      "fontSize": 16
+    },
+    {
+      "type": "diamond",
+      "x": 700,
+      "y": 80,
+      "width": 180,
+      "height": 120,
+      "backgroundColor": "#ff8cc8"
+    },
+    {
+      "type": "text",
+      "x": 720,
+      "y": 120,
+      "width": 140,
+      "height": 60,
+      "text": "验证请求\n用户状态\n活动状态\n抽奖频率\n库存检查",
+      "fontSize": 12
+    },
+    {
+      "type": "rectangle",
+      "x": 950,
+      "y": 100,
+      "width": 150,
+      "height": 80,
+      "backgroundColor": "#ff6b6b"
+    },
+    {
+      "type": "text",
+      "x": 975,
+      "y": 130,
+      "width": 100,
+      "height": 25,
+      "text": "抽奖引擎\n概率计算",
+      "fontSize": 14
+    },
+    {
+      "type": "rectangle",
+      "x": 1150,
+      "y": 100,
+      "width": 150,
+      "height": 80,
+      "backgroundColor": "#74c0fc"
+    },
+    {
+      "type": "text",
+      "x": 1175,
+      "y": 130,
+      "width": 100,
+      "height": 25,
+      "text": "更新库存\n记录中奖",
+      "fontSize": 14
+    },
+    {
+      "type": "rectangle",
+      "x": 1350,
+      "y": 100,
+      "width": 150,
+      "height": 80,
+      "backgroundColor": "#b2f2bb"
+    },
+    {
+      "type": "text",
+      "x": 1375,
+      "y": 130,
+      "width": 100,
+      "height": 25,
+      "text": "返回结果\n展示动画",
+      "fontSize": 14
+    },
+    {
+      "type": "arrow",
+      "x": 250,
+      "y": 140,
+      "points": [[0, 0], [50, 0]]
+    },
+    {
+      "type": "arrow",
+      "x": 450,
+      "y": 140,
+      "points": [[0, 0], [50, 0]]
+    },
+    {
+      "type": "arrow",
+      "x": 650,
+      "y": 140,
+      "points": [[0, 0], [50, 0]]
+    },
+    {
+      "type": "arrow",
+      "x": 880,
+      "y": 140,
+      "points": [[0, 0], [70, 0]]
+    },
+    {
+      "type": "arrow",
+      "x": 1100,
+      "y": 140,
+      "points": [[0, 0], [50, 0]]
+    },
+    {
+      "type": "text",
+      "x": 100,
+      "y": 350,
+      "width": 150,
+      "height": 25,
+      "text": "管理后台（免登录）",
+      "fontSize": 16
+    },
+    {
+      "type": "text",
+      "x": 300,
+      "y": 350,
+      "width": 150,
+      "height": 25,
+      "text": "全局中奖历史",
+      "fontSize": 16
+    },
+    {
+      "type": "text",
+      "x": 500,
+      "y": 350,
+      "width": 150,
+      "height": 25,
+      "text": "压测工具",
+      "fontSize": 16
+    },
+    {
+      "type": "text",
+      "x": 950,
+      "y": 350,
+      "width": 150,
+      "height": 25,
+      "text": "Redis缓存",
+      "fontSize": 16
+    },
+    {
+      "type": "text",
+      "x": 1150,
+      "y": 350,
+      "width": 150,
+      "height": 25,
+      "text": "PostgreSQL数据库",
+      "fontSize": 16
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff"
+  }
+}

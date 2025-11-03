@@ -26,6 +26,11 @@ go.work.sum
 
 # env file
 .env
+.docker.env
+
+# Rust build artifacts
+target/
+**/*.rs.bk
 
 # Editor/IDE
 # .idea/

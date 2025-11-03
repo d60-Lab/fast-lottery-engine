@@ -1,0 +1,112 @@
+@host = http://127.0.0.1:8080
+@admin_user = admin
+@admin_pass = __ADMIN_PASS__
+@user_name = user_{{$timestamp}}
+@user_pass = pass123
+
+### Health check
+GET {{host}}/healthz
+
+### User register (captures user_token)
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "{{user_name}}",
+  "password": "{{user_pass}}"
+}
+
+> {% client.global.set("user_token", response.body.token); %}
+
+### User login (alternative way to capture token)
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "{{user_name}}",
+  "password": "{{user_pass}}"
+}
+
+> {% client.global.set("user_token", response.body.token); %}
+
+### Get user profile
+GET {{host}}/api/user/profile
+Authorization: Bearer {{user_token}}
+
+### Get user lottery history
+GET {{host}}/api/user/lottery-history
+Authorization: Bearer {{user_token}}
+
+### List enabled prizes
+GET {{host}}/api/lottery/prizes
+
+### Draw once
+POST {{host}}/api/lottery/draw
+Authorization: Bearer {{user_token}}
+
+### Global lottery history
+GET {{host}}/api/lottery/global-history
+
+### Admin login (captures admin_token)
+POST {{host}}/admin/api/login
+Content-Type: application/json
+
+{
+  "username": "{{admin_user}}",
+  "password": "{{admin_pass}}"
+}
+
+> {% client.global.set("admin_token", response.body.token); %}
+
+### Admin list activities
+GET {{host}}/admin/api/activities
+Authorization: Bearer {{admin_token}}
+
+### Admin create activity (captures activity_id)
+POST {{host}}/admin/api/activities
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "活动_{{$timestamp}}",
+  "description": "手工测试",
+  "start_time": "2024-01-01T00:00:00Z",
+  "end_time": "2099-01-01T00:00:00Z",
+  "status": "ongoing"
+}
+
+> {% client.global.set("activity_id", response.body.id); %}
+
+### Admin list prizes
+GET {{host}}/admin/api/prizes
+Authorization: Bearer {{admin_token}}
+
+### Admin create prize under the created activity
+POST {{host}}/admin/api/prizes
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "activity_id": "{{activity_id}}",
+  "name": "测试奖品_{{$timestamp}}",
+  "description": "手工测试奖品",
+  "total_count": 1000,
+  "probability": 10,
+  "is_enabled": true
+}
+
+### Admin bench: mint tokens quickly (use first token for draw)
+POST {{host}}/admin/api/bench/mint-tokens
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "count": 5,
+  "prefix": "manual_bench_"
+}
+
+> {% client.global.set("bench_token", (response.body.tokens && response.body.tokens.length>0) ? response.body.tokens[0] : ""); %}
+
+### Draw using minted bench token
+POST {{host}}/api/lottery/draw
+Authorization: Bearer {{bench_token}}
